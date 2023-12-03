@@ -10,6 +10,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class Changing extends VBox {
     private Users users;
@@ -36,6 +37,38 @@ public class Changing extends VBox {
         changeStatus.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
         changePicture.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
         addFriend.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
+
+        changeStatusField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String name = content.getProfile().getName();
+                String status = changeStatusField.getText();
+                Users.updateStatus(name,status);
+                String[] data = Users.userData.get(name);
+                String pathImage = data[0];
+                String updatedStatus = data[1];
+                Profile profile = new Profile(name,pathImage,updatedStatus);
+                content.updateContent(profile);               
+            }
+        });
+
+        changePictureField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String name = content.getProfile().getName();
+                String imagePath = changePictureField.getText();
+                Users.updatePathImage(name,imagePath);
+                String[] data = Users.userData.get(name);
+                String pathImageUpdated = data[0];
+                String status = data[1];
+                Profile profile = new Profile(name,pathImageUpdated,status);
+                content.updateContent(profile);             
+            }
+        });
+
+        addFriendField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+
+            }
+        });
 
         changeStatus.setOnAction(e -> {
             String name = content.getProfile().getName();
