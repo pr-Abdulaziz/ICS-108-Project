@@ -11,6 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import java.util.ArrayList;
+
 
 public class Changing extends VBox {
     private Users users;
@@ -32,7 +34,9 @@ public class Changing extends VBox {
         changeStatusField.setPromptText("Change Status");            
         changePictureField.setPromptText("Change Picture");            
         addFriendField.setPromptText("Friend name");
-
+        changeStatusField.setPrefWidth(200);            
+        changePictureField.setPrefWidth(200);            
+        addFriendField.setPrefWidth(200);
         // Setting Fonts for Buttons 
         changeStatus.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
         changePicture.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
@@ -43,30 +47,76 @@ public class Changing extends VBox {
                 String name = content.getProfile().getName();
                 String status = changeStatusField.getText();
                 Users.updateStatus(name,status);
-                String[] data = Users.userData.get(name);
-                String pathImage = data[0];
-                String updatedStatus = data[1];
-                Profile profile = new Profile(name,pathImage,updatedStatus);
+                Object[] data = Users.userData.get(name);
+                String pathImage = (String) data[0];
+                String updatedStatus = (String) data[1];
+                ArrayList<String> friends = (ArrayList<String>) data[2];
+                Profile profile = new Profile(name,pathImage,updatedStatus,friends);
                 content.updateContent(profile);               
             }
         });
 
         changePictureField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                String name = content.getProfile().getName();
-                String imagePath = changePictureField.getText();
-                Users.updatePathImage(name,imagePath);
-                String[] data = Users.userData.get(name);
-                String pathImageUpdated = data[0];
-                String status = data[1];
-                Profile profile = new Profile(name,pathImageUpdated,status);
-                content.updateContent(profile);             
+
+                if (event.getCode() == KeyCode.ENTER) {
+                    String name = content.getProfile().getName();
+                    String imagePath = changePictureField.getText();
+                    Users.updatePathImage(name,imagePath);
+                    Object[] data = Users.userData.get(name);
+                    String pathImageUpdated = (String) data[0];
+                    String status = (String) data[1];
+                    ArrayList<String> friends = (ArrayList<String>) data[2];
+                    Profile profile = new Profile(name,pathImageUpdated,status,friends);
+                    content.updateContent(profile);             
+                }
             }
         });
 
         addFriendField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
 
+                String name = content.getProfile().getName();
+                String friendName = addFriendField.getText();
+                if (!(name.equals(friendName))) {
+                    ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
+                    if ((Users.checkUser(friendName)) && !(friendNames.contains(friendName))) { 
+                        Users.addingFriends(name,friendName);
+                        Object[] data = Users.userData.get(name);
+                        String pathImage = (String) data[0];
+                        String status = (String) data[1];
+                        ArrayList<String> friends = (ArrayList<String>) data[2];
+                        Profile profile = new Profile(name,pathImage,status,friends);
+                        content.updateContent(profile);
+
+                        System.out.println("Friends of "+ name);
+                        Object[] objectArray = Users.userData.get(name);
+                        
+                        String firstString = (String) objectArray[0];
+                        String secondString = (String) objectArray[1];
+                        ArrayList<String> stringList = (ArrayList<String>) objectArray[2];
+                        
+                        System.out.println("Images: " + firstString);
+                        System.out.println("Status: " + secondString);
+                        System.out.println("Friends: " + stringList);
+
+                        System.out.println("=========================");
+                        System.out.println("=========================");
+
+                        System.out.println("Friends of "+ friendName);
+
+                        Object[] objectArray2 = Users.userData.get(friendName);
+                        
+                        String firstString2 = (String) objectArray2[0];
+                        String secondString2 = (String) objectArray2[1];
+                        ArrayList<String> stringList2 = (ArrayList<String>) objectArray2[2];
+                        
+                        System.out.println("Images: " + firstString2);
+                        System.out.println("Status: " + secondString2);
+                        System.out.println("Friends: " + stringList2);
+                    
+                    }
+                }
             }
         });
 
@@ -74,24 +124,67 @@ public class Changing extends VBox {
             String name = content.getProfile().getName();
             String status = changeStatusField.getText();
             Users.updateStatus(name,status);
-            String[] data = Users.userData.get(name);
-            String pathImage = data[0];
-            String updatedStatus = data[1];
-            Profile profile = new Profile(name,pathImage,updatedStatus);
+            Object[] data = Users.userData.get(name);
+            String pathImage = (String) data[0];
+            String updatedStatus = (String) data[1];
+            ArrayList<String> friends = (ArrayList<String>) data[2];
+            Profile profile = new Profile(name,pathImage,updatedStatus,friends);
             content.updateContent(profile);
         });
         changePicture.setOnAction(e -> {
             String name = content.getProfile().getName();
             String imagePath = changePictureField.getText();
             Users.updatePathImage(name,imagePath);
-            String[] data = Users.userData.get(name);
-            String pathImageUpdated = data[0];
-            String status = data[1];
-            Profile profile = new Profile(name,pathImageUpdated,status);
+            Object[] data = Users.userData.get(name);
+            String pathImageUpdated = (String) data[0];
+            String status = (String) data[1];
+            ArrayList<String> friends = (ArrayList<String>) data[2];
+            Profile profile = new Profile(name,pathImageUpdated,status,friends);
             content.updateContent(profile);
         });
+        // ADDING 
         addFriend.setOnAction(e -> {
-            //new Profile(changeStatusField.getText());
+            String name = content.getProfile().getName();
+            String friendName = addFriendField.getText();
+            if (!(name.equals(friendName))) {
+                ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
+                if ((Users.checkUser(friendName)) && !(friendNames.contains(friendName))) { 
+                    Users.addingFriends(name,friendName);
+                    Object[] data = Users.userData.get(name);
+                    String pathImage = (String) data[0];
+                    String status = (String) data[1];
+                    ArrayList<String> friends = (ArrayList<String>) data[2];
+                    Profile profile = new Profile(name,pathImage,status,friends);
+                    content.updateContent(profile);
+
+                    System.out.println("Friends of "+ name);
+                    Object[] objectArray = Users.userData.get(name);
+                    
+                    String firstString = (String) objectArray[0];
+                    String secondString = (String) objectArray[1];
+                    ArrayList<String> stringList = (ArrayList<String>) objectArray[2];
+                    
+                    System.out.println("Images: " + firstString);
+                    System.out.println("Status: " + secondString);
+                    System.out.println("Friends: " + stringList);
+
+                    System.out.println("=========================");
+                    System.out.println("=========================");
+
+                    System.out.println("Friends of "+ friendName);
+
+                    Object[] objectArray2 = Users.userData.get(friendName);
+                    
+                    String firstString2 = (String) objectArray2[0];
+                    String secondString2 = (String) objectArray2[1];
+                    ArrayList<String> stringList2 = (ArrayList<String>) objectArray2[2];
+                    
+                    System.out.println("Images: " + firstString2);
+                    System.out.println("Status: " + secondString2);
+                    System.out.println("Friends: " + stringList2);
+                
+                }
+            }
         });
         VBox vbox1 = new VBox(10);
         VBox vbox2 = new VBox(10);
@@ -111,13 +204,13 @@ public class Changing extends VBox {
         gridPane.add(vbox3,0,2);
         
         gridPane.setAlignment(Pos.TOP_CENTER);
-        gridPane.setPadding(new Insets(50,15,50,15));
+        gridPane.setPadding(new Insets(50,5,50,5));
         
         gridPane.setVgap(50);
         
         setAlignment(Pos.CENTER);
         getChildren().add(gridPane);
-        setPadding(new Insets(75,15,15,15));
+        setPadding(new Insets(75,5,15,5));
         VBox.setVgrow(gridPane, Priority.ALWAYS);
 
         // Setting Background 

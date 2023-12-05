@@ -9,12 +9,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import java.util.ArrayList;
 
 public class Adding extends HBox {
     private Content content;
+    private Updated updated;
     // ALL INFORMATION ABOUT USERS INTO THIS PANE.
-    public Adding(Content content) {
+    public Adding(Content content,Updated updated) {
         this.content = content;
+        this.updated = updated;
         Button add = new Button("Add");
         Button delete = new Button("Delete");
         Button lookUp = new Button("Lookup");
@@ -33,14 +36,17 @@ public class Adding extends HBox {
             String nameUser = addNameField.getText();
 
             // CHECK THE USER HAVE ALREADY EXISTED OR NOT.
-            if (Users.checkUser(nameUser)) {
+            if (!(Users.checkUser(nameUser))) {
+                content.updatedMessage("New profile created");
                 // IF THE METHOD RETURNS TRUE, WE CAN ADD THE USER INTO THE OUR HASHMAP AND DOING NEW PROFILE.
-                String[] data = {"NoImage.png","No current status"};
+                ArrayList<String> friends = new ArrayList<String>();
+                Object[] data = {"NoImage.png","No current status",friends};
                 Users.addUser(nameUser, data);
                 // WE WANT TO COSTUMIZE THE PAGE USING NEW PROFILE. 
                 Profile profile = new Profile(nameUser);
                 // HERE, WE WANT TO UPDATE THE CONTENT.
-                content.updateContent(profile); 
+                content.updateContent(profile);
+
             
             }
 
@@ -51,19 +57,23 @@ public class Adding extends HBox {
         delete.setOnAction(e -> {
             // DELETE THE USER FROM THE HASHMAP
             Users.userData.remove(addNameField.getText());
+            content.updateContent(null);
+            content.updatedMessage("Profile delete");
             // WANT TO CLEAR THE PAGE.
             
         });
         lookUp.setOnAction(e -> {
             String nameUser = addNameField.getText();
-            if (Users.userData.containsKey(nameUser)) {
-                String[] userData = Users.getUser(nameUser);
+            if ((Users.userData.containsKey(nameUser))) {
+                Object[] userData = Users.getUser(nameUser);
             
                 if (userData != null) {
-                    String pathImage = userData[0];
-                    String status = userData[1];
+                    String pathImage = (String) userData[0];
+                    String status = (String) userData[1];
+
+                    ArrayList<String> friends = (ArrayList<String>) userData[2];                   
                     
-                    Profile profile = new Profile(nameUser, pathImage, status);
+                    Profile profile = new Profile(nameUser, pathImage, status,friends);
                     content.updateContent(profile); // Assuming Content class has this method
                 } else {
                     // Handle case where user is not found
