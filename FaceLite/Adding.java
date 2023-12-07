@@ -13,11 +13,10 @@ import java.util.ArrayList;
 
 public class Adding extends HBox {
     private Content content;
-    private Updated updated;
+    
     // ALL INFORMATION ABOUT USERS INTO THIS PANE.
-    public Adding(Content content,Updated updated) {
+    public Adding(Content content) {
         this.content = content;
-        this.updated = updated;
         Button add = new Button("Add");
         Button delete = new Button("Delete");
         Button lookUp = new Button("Lookup");
@@ -30,7 +29,7 @@ public class Adding extends HBox {
         lookUp.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
         name.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
 
-        // IF WE WANT TO PUT NEW PROFILE
+        // IF WE WANT TO ADD A NEW PROFILE
         add.setOnAction(e -> {
             // GET THE TEXT FROM THE TEXT FIELD.
             String nameUser = addNameField.getText();
@@ -58,13 +57,14 @@ public class Adding extends HBox {
             // DELETE THE USER FROM THE HASHMAP
             Users.userData.remove(addNameField.getText());
             content.updateContent(null);
-            content.updatedMessage("Profile delete");
+            content.updatedMessage("Profile of "+ addNameField.getText() +" deleted");
             // WANT TO CLEAR THE PAGE.
             
         });
         lookUp.setOnAction(e -> {
             String nameUser = addNameField.getText();
             if ((Users.userData.containsKey(nameUser))) {
+                content.updatedMessage("Displaying " + nameUser);
                 Object[] userData = Users.getUser(nameUser);
             
                 if (userData != null) {
@@ -78,6 +78,8 @@ public class Adding extends HBox {
                 } else {
                     // Handle case where user is not found
                 }
+            } else {
+                content.updatedMessage("A Profile with the name of " + nameUser + " does not exist");
             }
         });
         setSpacing(20);

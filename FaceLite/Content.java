@@ -14,7 +14,7 @@ public class Content extends Pane {
     private Updated updated;
     private VBox vBox;
 
-    
+     
     public Profile getProfile() {
         return profile;
     }

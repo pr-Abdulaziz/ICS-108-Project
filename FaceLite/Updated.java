@@ -15,12 +15,6 @@ public class Updated extends HBox{
     private Label messageL;
 
     public Updated() {
-        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(backgroundFill);
-        setBackground(background);
-        setPadding(new Insets(10, 10, 10, 10));
-        
-
         messageL = new Label();
         messageL.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),15));
 

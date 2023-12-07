@@ -12,7 +12,7 @@ public class Main extends Application {
         try {
             window = stage;
             
-            new buildScreen(window);
+            new BuildScreen(window);
             
             // Show the stage
             window.show();
@@ -20,5 +20,6 @@ public class Main extends Application {
             ex.printStackTrace();
         }
     }
+
 }
 

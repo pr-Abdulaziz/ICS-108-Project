@@ -11,10 +11,6 @@ public class Users {
         return userData;
     }
 
-    public static String getString() {
-        return userData.toString();
-    }
-
     public static Object[] getUser(String name) {
         return userData.get(name);
     }
@@ -47,5 +43,14 @@ public class Users {
         Object[] existingData2 = userData.get(friendName);
         ((ArrayList<String>) existingData1[2]).add(friendName);
         ((ArrayList<String>) existingData2[2]).add(userName);
+    }
+
+    // Using PrintWrite to write all information about users inside the document
+    public static void writeToFile() {
+        // Using PrintWrite class
+    }
+    // Using Scanner to read all information about users inside the document
+    public static void readFromFile() {
+        // Using Scanner class
     }
 }

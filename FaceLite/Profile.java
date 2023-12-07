@@ -41,7 +41,8 @@ public class Profile extends HBox {
 
         Image image = new Image(getClass().getResource("assests/images/"+profileImage).toString());
         ImageView imageView = new ImageView(image);
-
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
         VBox vBoxForListOfFriends = new VBox(10);
         vBoxForListOfFriends.getChildren().add(friendListL);
         ArrayList<String> listOfFriends = (ArrayList<String>) Users.userData.get(name)[2];
@@ -80,7 +81,8 @@ public class Profile extends HBox {
 
         Image image = new Image(getClass().getResource("assests/images/"+profileImage).toString());
         ImageView imageView = new ImageView(image);
-
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
         // To set list of friends:
         VBox vBoxForListOfFriends = new VBox(10);
         vBoxForListOfFriends.getChildren().add(friendListL);

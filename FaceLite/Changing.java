@@ -1,6 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -11,7 +12,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+
+import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Changing extends VBox {
@@ -20,10 +25,12 @@ public class Changing extends VBox {
     public Changing(Content content, Users users) {
         this.content = content;
         this.users = users;
+        
         initializeGUI();        
     } 
     public void initializeGUI() {
         // Variables
+
         GridPane gridPane = new GridPane();
         Button changeStatus = new Button("Change Status");
         Button changePicture = new Button("Change Picture");
@@ -43,44 +50,68 @@ public class Changing extends VBox {
         addFriend.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
 
         changeStatusField.setOnKeyPressed(event -> {
+                
             if (event.getCode() == KeyCode.ENTER) {
-                String name = content.getProfile().getName();
-                String status = changeStatusField.getText();
-                Users.updateStatus(name,status);
-                Object[] data = Users.userData.get(name);
-                String pathImage = (String) data[0];
-                String updatedStatus = (String) data[1];
-                ArrayList<String> friends = (ArrayList<String>) data[2];
-                Profile profile = new Profile(name,pathImage,updatedStatus,friends);
-                content.updateContent(profile);               
+                if (content.getProfile() == null) {
+                    content.updatedMessage("Please select a profile to change the status");
+                } else {
+                    String name = content.getProfile().getName();
+                    String status = changeStatusField.getText();
+                    Users.updateStatus(name,status);
+                    content.updatedMessage("Status updated to: "+status);
+                    Object[] data = Users.userData.get(name);
+                    String pathImage = (String) data[0];
+                    String updatedStatus = (String) data[1];
+                    ArrayList<String> friends = (ArrayList<String>) data[2];
+                    Profile profile = new Profile(name,pathImage,updatedStatus,friends);
+                    content.updateContent(profile);               
+                }
             }
+
         });
 
         changePictureField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-
-                if (event.getCode() == KeyCode.ENTER) {
+                if (content.getProfile() == null) {
+                    content.updatedMessage("Please select a profile to change the picture");
+                } 
+                else {
                     String name = content.getProfile().getName();
                     String imagePath = changePictureField.getText();
-                    Users.updatePathImage(name,imagePath);
-                    Object[] data = Users.userData.get(name);
-                    String pathImageUpdated = (String) data[0];
-                    String status = (String) data[1];
-                    ArrayList<String> friends = (ArrayList<String>) data[2];
-                    Profile profile = new Profile(name,pathImageUpdated,status,friends);
-                    content.updateContent(profile);             
+                    try { 
+                        File image = new File("FaceLite/assests/images/"+imagePath);
+                        // ClassLoader classLoader = Main.class.getClassLoader();
+                        if (!image.exists()) {
+                            throw new NullPointerException("Resource not found.");
+                        }
+                        
+                        Users.updatePathImage(name,imagePath);
+                        Object[] data = Users.userData.get(name);
+                        String pathImageUpdated = (String) data[0];
+                        String status = (String) data[1];
+                        ArrayList<String> friends = (ArrayList<String>) data[2];
+                        Profile profile = new Profile(name,pathImageUpdated,status,friends);
+                        content.updatedMessage("Picture Updated");
+                        content.updateContent(profile);
+                    } catch (NullPointerException ex) {
+                        // Handle the case where the resource is not found
+                        content.updatedMessage("Photo not found in resources");
+
+                    }
                 }
             }
         });
 
         addFriendField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-
-                String name = content.getProfile().getName();
-                String friendName = addFriendField.getText();
-                if (!(name.equals(friendName))) {
+                if (content.getProfile() == null) {
+                    content.updatedMessage("Please select a profile to change the friends");
+                } else {
+                    String name = content.getProfile().getName();
+                    String friendName = addFriendField.getText();
                     ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
-                    if ((Users.checkUser(friendName)) && !(friendNames.contains(friendName))) { 
+                    if (!(name.equals(friendName)) && (Users.checkUser(friendName)) && !(friendNames.contains(friendName))) {
+                        content.updatedMessage(friendName+" added as frirnd");
                         Users.addingFriends(name,friendName);
                         Object[] data = Users.userData.get(name);
                         String pathImage = (String) data[0];
@@ -115,40 +146,71 @@ public class Changing extends VBox {
                         System.out.println("Status: " + secondString2);
                         System.out.println("Friends: " + stringList2);
                     
+                    
+                    }
+                    else{
+                       content.updatedMessage("friend with the name "+friendName+" can not be added"); 
                     }
                 }
             }
         });
 
         changeStatus.setOnAction(e -> {
-            String name = content.getProfile().getName();
-            String status = changeStatusField.getText();
-            Users.updateStatus(name,status);
-            Object[] data = Users.userData.get(name);
-            String pathImage = (String) data[0];
-            String updatedStatus = (String) data[1];
-            ArrayList<String> friends = (ArrayList<String>) data[2];
-            Profile profile = new Profile(name,pathImage,updatedStatus,friends);
-            content.updateContent(profile);
+            if (content.getProfile() == null) {
+                content.updatedMessage("Please select a profile to change the status");
+            } else {
+                String name = content.getProfile().getName();
+                String status = changeStatusField.getText();
+                content.updatedMessage("Status updated to: "+status);
+                Users.updateStatus(name,status);
+                Object[] data = Users.userData.get(name);
+                String pathImage = (String) data[0];
+                String updatedStatus = (String) data[1];
+                ArrayList<String> friends = (ArrayList<String>) data[2];
+                Profile profile = new Profile(name,pathImage,updatedStatus,friends);
+                content.updateContent(profile);               
+            }
         });
         changePicture.setOnAction(e -> {
-            String name = content.getProfile().getName();
-            String imagePath = changePictureField.getText();
-            Users.updatePathImage(name,imagePath);
-            Object[] data = Users.userData.get(name);
-            String pathImageUpdated = (String) data[0];
-            String status = (String) data[1];
-            ArrayList<String> friends = (ArrayList<String>) data[2];
-            Profile profile = new Profile(name,pathImageUpdated,status,friends);
-            content.updateContent(profile);
+            if (content.getProfile() == null) {
+                content.updatedMessage("Please select a profile to change the picture");
+            } 
+            else {
+                String name = content.getProfile().getName();
+                String imagePath = changePictureField.getText();
+                try { 
+                    File image = new File("FaceLite/assests/images/"+imagePath);
+                    // ClassLoader classLoader = Main.class.getClassLoader();
+                    if (!image.exists()) {
+                        throw new NullPointerException("Resource not found.");
+                    }
+                    
+                    Users.updatePathImage(name,imagePath);
+                    Object[] data = Users.userData.get(name);
+                    String pathImageUpdated = (String) data[0];
+                    String status = (String) data[1];
+                    ArrayList<String> friends = (ArrayList<String>) data[2];
+                    Profile profile = new Profile(name,pathImageUpdated,status,friends);
+                    content.updatedMessage("Picture Updated");
+                    content.updateContent(profile);
+                } catch (NullPointerException ex) {
+                    // Handle the case where the resource is not found
+                    content.updatedMessage("Photo not found in resources");
+
+                }
+            }
         });
+
         // ADDING 
         addFriend.setOnAction(e -> {
-            String name = content.getProfile().getName();
-            String friendName = addFriendField.getText();
-            if (!(name.equals(friendName))) {
+            if (content.getProfile() == null) {
+                content.updatedMessage("Please select a profile to change the friends");
+            } else {
+                String name = content.getProfile().getName();
+                String friendName = addFriendField.getText();
                 ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
-                if ((Users.checkUser(friendName)) && !(friendNames.contains(friendName))) { 
+                if (!(name.equals(friendName)) && (Users.checkUser(friendName)) && !(friendNames.contains(friendName))) {
+                    content.updatedMessage(friendName+" added as frirnd");
                     Users.addingFriends(name,friendName);
                     Object[] data = Users.userData.get(name);
                     String pathImage = (String) data[0];
@@ -183,6 +245,10 @@ public class Changing extends VBox {
                     System.out.println("Status: " + secondString2);
                     System.out.println("Friends: " + stringList2);
                 
+                
+                }
+                else{
+                    content.updatedMessage("friend with the name "+friendName+" can not be added"); 
                 }
             }
         });
