@@ -28,7 +28,6 @@ public class BuildScreen {
     private Users users;
     private Updated updated;
     private BorderPane pane;
-    private SplashScreen splashScreen;
 
     public BuildScreen(Stage stage) {
         this.stage = stage;
