@@ -1,11 +1,4 @@
 import javafx.geometry.Insets;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -22,9 +15,6 @@ public class Content extends Pane {
     public Content(Updated updated){
         this.updated = updated;
         vBox = new VBox();
-        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(backgroundFill);
-        setBackground(background);
         setPadding(new Insets(10, 10, 10, 10));
         vBox.setScaleY(500);
         getChildren().add(vBox);

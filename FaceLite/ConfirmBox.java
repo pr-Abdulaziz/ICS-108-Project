@@ -22,6 +22,14 @@ public class ConfirmBox {
         Button yes = new Button("yes");
         Button no = new Button("no");
 
+         
+        VBox vbox = new VBox(20);
+        HBox buttons = new HBox(20);
+        buttons.setAlignment(Pos.CENTER);
+        vbox.setPadding(new Insets(20,20,20,20));
+        vbox.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(yes,no);
+        vbox.getChildren().addAll(lable,buttons);
         
         yes.setOnAction(e -> {
             answer = true; 
@@ -31,14 +39,6 @@ public class ConfirmBox {
             answer = false;
             window.close();
         });
-
-        VBox vbox = new VBox(20);
-        HBox buttons = new HBox(20);
-        buttons.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(20,20,20,20));
-        vbox.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(yes,no);
-        vbox.getChildren().addAll(lable,buttons);
         
         Scene scene = new Scene(vbox);
 
@@ -49,8 +49,8 @@ public class ConfirmBox {
         window.setHeight(150);
         window.setWidth(250);
         window.setScene(scene);
-        window.show();
-
+        window.showAndWait();
+        
         return answer;
     }
 }

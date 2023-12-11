@@ -118,3 +118,28 @@ The `Updated` class is a simple-short class designed to control the massages dis
 The `Users` class is one of the main classes of the project since it stores the information of each user.
 
 This class uses dictionary to store the information, taking the name of the user as a key and (status, picture, friends) as a value, it also checks whether a certain username already exists or not by search in the dictionary using the key name, many other classes use this class in-order to get the information of users and handle them accordingly.
+
+
+## Extra features added to the project: to enhance the users' experience
+
+1- Changing the mode:
+ Changing the look of the screen in order to make a more suitable experience for all users.
+
+
+2- Confirming exist program:
+A massage that pops up after pressing the ket to close the program, showing a massage asking to confirm that the user wants to exist the program.
+
+
+3- Application interface: 
+A slow shading interface welcoming the user including the program logo.
+
+
+4- Saving users' data:
+Saving the users' data even though after existing the program in a file, and the program would read this file whenever  the program again to restore the information of the users.
+
+
+5- Deleting friend button:
+Added a new button named 'Delete friend' if the user wanted to delete a friend from the friend list without deleting the friend's profile. 
+
+6- URL image:
+Added a feature that would simplify the use of the program, in a way that the user can change the image of the profile using a URL path without needing to store the image in the device.

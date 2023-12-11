@@ -1,12 +1,12 @@
 import java.util.HashMap;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
-// import java.io.File;
 
 public class Users {
     protected static HashMap<String, Object[]> userData = new HashMap<String, Object[]>();
-    // private File usersDataBase;
-    // private String currentUser;
+    static File usersDataBase = new File("FaceLite/assests/usersDataBase.txt");
     public static HashMap<String, Object[]> getUserData() {
         return userData;
     }
@@ -44,13 +44,54 @@ public class Users {
         ((ArrayList<String>) existingData1[2]).add(friendName);
         ((ArrayList<String>) existingData2[2]).add(userName);
     }
-
-    // Using PrintWrite to write all information about users inside the document
-    public static void writeToFile() {
-        // Using PrintWrite class
+    public static void deletingFriends(String userName, String friendName) {
+        Object[] existingData1 = userData.get(userName);
+        Object[] existingData2 = userData.get(friendName);
+        ((ArrayList<String>) existingData1[2]).remove(friendName);
+        ((ArrayList<String>) existingData2[2]).remove(userName);
     }
+
     // Using Scanner to read all information about users inside the document
     public static void readFromFile() {
-        // Using Scanner class
+        Scanner input;
+        try {
+            input = new Scanner(usersDataBase);
+            if (!(input.hasNext())) {
+                throw new NullPointerException();
+            } else {
+                while (input.hasNextLine()) {
+                    String line = input.nextLine();
+                    String[] info = line.split("///");
+                    
+                    // Check if the array has at least 4 elements
+                    if (info.length >= 3) {
+                        String name = info[0];
+                        String image = info[1];
+                        String status = info[2];
+                        
+                        // Check if the array has at least 4 elements for friends
+                        ArrayList<String> friends = new ArrayList<>();
+                        if (info.length >= 4) {
+                            String[] fString = info[3].split("--->>>");
+                            for (int i = 0; i < fString.length; i++) {
+                                friends.add(fString[i]);
+                            }
+                        }
+                        
+                        Object[] data = {image, status, friends};
+                        userData.put(name, data);
+                    } else {
+                        // Handle the case where the line doesn't have enough elements
+                        System.err.println("Invalid line: " + line);
+                    }
+                }
+
+            }
+            input.close();
+        } catch(FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch(NullPointerException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

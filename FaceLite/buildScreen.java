@@ -16,7 +16,13 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 // Build the screen
 public class BuildScreen {
@@ -27,7 +33,9 @@ public class BuildScreen {
     private Adding adding;
     private Users users;
     private Updated updated;
-    private BorderPane pane;
+    protected static BorderPane pane;
+    static File usersDataBase = new File("FaceLite/assests/usersDataBase.txt");
+
 
     public BuildScreen(Stage stage) {
         this.stage = stage;
@@ -36,9 +44,10 @@ public class BuildScreen {
     
     public void buildGUI() {
         // Create the main scene content
+        Users.readFromFile();
+
         StackPane mainRoot = new StackPane();
         VBox vBox = new VBox(20);
-
         
         BackgroundFill backgroundFill = new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
@@ -55,13 +64,20 @@ public class BuildScreen {
         ImageView iconView = new ImageView(icon);
         iconView.setFitHeight(100);
         iconView.setFitWidth(100);
+
+        Rectangle borderRadius = new Rectangle(iconView.getFitWidth(), iconView.getFitHeight());
+        borderRadius.setArcWidth(20);
+        borderRadius.setArcHeight(20);
+
+        iconView.setClip(borderRadius);
+
         
         vBox.getChildren().addAll(iconView,welcomeL);
 
         mainRoot.getChildren().add(vBox);
         vBox.setAlignment(Pos.CENTER);
         // Timeline to close the stage and trigger fade-out after 5 seconds
-        Duration splashDuration = Duration.seconds(5);
+        Duration splashDuration = Duration.seconds(4);
         
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), vBox);
         fadeOut.setFromValue(1.0);
@@ -86,7 +102,8 @@ public class BuildScreen {
         stage.setMinWidth(900);
         stage.getIcons().add(icon);
         stage.setHeight(700);
-        stage.setWidth(900);
+        stage.setWidth(1000);
+        stage.setResizable(false);
         
         Timeline splashTimeline = new Timeline(splashKeyFrame);
         splashTimeline.play();
@@ -97,14 +114,63 @@ public class BuildScreen {
         boolean answer = ConfirmBox.display("Exit", "Sure you want to close the program?");
         if (answer) {
             stage.close();
+            // Using PrintWrite to write all information about users inside the document
+            PrintWriter output;
+            try {
+                output = new PrintWriter(usersDataBase);
+                if (Users.userData.size() == 0) {
+                    throw new NullPointerException();
+                } else {
+                    for (Entry<String, Object[]> entry : Users.userData.entrySet()) {
+                        String userName = entry.getKey();
+                        Object[] data = entry.getValue();
+                        ArrayList<String> info = new ArrayList<String>();
+                        ArrayList<String> friends = new ArrayList<String>();
+
+                        for (Object value : data) {
+                            if (value instanceof String) {
+                                info.add((String) value);
+                            } else if (value instanceof ArrayList<?>) {
+                                ArrayList<String> arrayList = (ArrayList<String>) value;
+                                for (int i = 0; i < arrayList.size(); i++) {
+                                    friends.add(arrayList.get(i));
+                                }
+                            }
+                        }
+                        output.print(userName + "///");
+                        for (int index = 0; index < info.size(); index++) {
+                            if (index == info.size()-1) 
+                                output.print(info.get(index));
+                            else {
+                                output.print(info.get(index)+"///");
+                            }
+                        }
+                        if (friends.size() > 0) {
+                            output.print("///");
+                            for (int i = 0; i < friends.size(); i++) {
+                                output.print(friends.get(i) + "--->>>");
+                            }
+                        }
+                        output.println("");
+                    }
+                }
+                output.close();
+            } catch(FileNotFoundException ex) {
+                System.out.println(ex.getMessage());
+            } catch(NullPointerException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }  
 
     // Method to switch to the main scene
     private void switchToMainScene() {
 
-
         pane = new BorderPane();
+        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
+        Background background = new Background(backgroundFill);
+        pane.setBackground(background);
+        
         VBox vBox = new VBox(10);
         updated = new Updated();
         content = new Content(updated);
@@ -112,10 +178,12 @@ public class BuildScreen {
         users = new Users();
         changing = new Changing(content,users);
 
+
         vBox.getChildren().addAll(content,updated);
         pane.setLeft(changing);
         pane.setTop(adding);
         pane.setCenter(vBox);
+        
         // FOR ICON:
         Image icon = new Image(getClass().getResource("assests/Icon.png").toString());
 
@@ -124,7 +192,7 @@ public class BuildScreen {
             closeProgram();
         });
 
-        mainScene = new Scene(pane,700,900);
+        mainScene = new Scene(pane,700,1000);
         stage.setScene(mainScene);
         stage.getIcons().add(icon);
         stage.setTitle("FaceLite");
@@ -132,6 +200,7 @@ public class BuildScreen {
         stage.setMinWidth(900);
         stage.getIcons().add(icon);
         stage.setHeight(700);
-        stage.setWidth(900);
+        stage.setWidth(1000);
+        stage.setResizable(false);
     }
 }

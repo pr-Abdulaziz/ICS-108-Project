@@ -10,8 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            window = stage;
-            
+            window = stage; 
             new BuildScreen(window);
             
             // Show the stage
