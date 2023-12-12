@@ -42,8 +42,8 @@ public class BuildScreen {
         buildGUI();
     }
     
+    // Create the main scene content
     public void buildGUI() {
-        // Create the main scene content
         Users.readFromFile();
 
         StackPane mainRoot = new StackPane();
@@ -59,7 +59,6 @@ public class BuildScreen {
         
         // Create the main scene
         mainScene = new Scene(mainRoot, 700, 900);
-        // Create a timeline for the splash screen duration
         Image icon = new Image(getClass().getResource("assests/Icon.png").toString());
         ImageView iconView = new ImageView(icon);
         iconView.setFitHeight(100);
@@ -92,7 +91,6 @@ public class BuildScreen {
                     });
                 }
         );
-        // FOR ICON:
 
         // Create a new stage for the main scene
         stage.setScene(mainScene);
@@ -159,32 +157,28 @@ public class BuildScreen {
                 System.out.println(ex.getMessage());
             } catch(NullPointerException ex) {
                 System.out.println(ex.getMessage());
-            }
+            } 
         }
     }  
 
-    // Method to switch to the main scene
     private void switchToMainScene() {
-
         pane = new BorderPane();
         BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
         pane.setBackground(background);
-        
+
         VBox vBox = new VBox(10);
         updated = new Updated();
         content = new Content(updated);
         adding = new Adding(content);
         users = new Users();
-        changing = new Changing(content,users);
+        changing = new Changing(content, users);
 
-
-        vBox.getChildren().addAll(content,updated);
+        vBox.getChildren().addAll(content, updated);
         pane.setLeft(changing);
         pane.setTop(adding);
         pane.setCenter(vBox);
-        
-        // FOR ICON:
+
         Image icon = new Image(getClass().getResource("assests/Icon.png").toString());
 
         stage.setOnCloseRequest(e -> {

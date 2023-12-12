@@ -7,21 +7,12 @@ import javafx.scene.text.Font;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.io.FileInputStream;
-
-
 import java.util.ArrayList;
 public class Profile extends VBox {
     private String name;
     private String status;
     private String profileImage;
     private ArrayList<String> friends;
-
-
     
     public String getName() {
         return name;
@@ -34,7 +25,6 @@ public class Profile extends VBox {
     }
     // ADDING A NEW PROFILE -- DEFAULT PROFILE -- 
     public Profile(String name) {
-        HBox hBox = new HBox();
         this.name = name;
         this.status = "No current Status";
         this.profileImage = "NoImage.png";
@@ -61,15 +51,11 @@ public class Profile extends VBox {
             vBoxForListOfFriends.getChildren().add(label);
         }
         
-        VBox forImageAndName = new VBox(10);
-        forImageAndName.getChildren().addAll(nameL,imageView);
-
+        HBox forImageAndFriends = new HBox(150);
+        forImageAndFriends.getChildren().addAll(imageView,vBoxForListOfFriends);
+        forImageAndFriends.setAlignment(Pos.TOP_LEFT);
         // ==================================================
-        hBox.getChildren().addAll(forImageAndName,vBoxForListOfFriends);
-        hBox.setAlignment(Pos.TOP_LEFT);
-        hBox.setSpacing(150);
-        vBoxForListOfFriends.setPadding(new Insets(50, 0, 0, 0));
-        getChildren().addAll(hBox,statusL);
+        getChildren().addAll(nameL,forImageAndFriends,statusL);
         setAlignment(Pos.TOP_LEFT);
         setSpacing(20);
         setPadding(new Insets(20, 20, 50, 20));
@@ -90,8 +76,6 @@ public class Profile extends VBox {
         nameL.setTextFill(Color.BLUE);
         statusL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 15));
         friendListL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 25));
-        ImageView imageView1 = new ImageView();
-
         
         Image image = new Image(getClass().getResource("assests/images/"+profileImage).toString());
         ImageView imageView = new ImageView(image);
@@ -105,19 +89,13 @@ public class Profile extends VBox {
             vBoxForListOfFriends.getChildren().add(label);
         }
         
-        VBox forImageAndName = new VBox(10);
-        forImageAndName.getChildren().addAll(nameL,imageView);
-
+        HBox forImageAndFriends = new HBox(150);
+        forImageAndFriends.getChildren().addAll(imageView,vBoxForListOfFriends);
+        forImageAndFriends.setAlignment(Pos.TOP_LEFT);
         // ==================================================
-        hBox.getChildren().addAll(forImageAndName,vBoxForListOfFriends);
-        hBox.setAlignment(Pos.TOP_LEFT);
-        hBox.setSpacing(150);
-        vBoxForListOfFriends.setPadding(new Insets(50, 0, 0, 0));
-        getChildren().addAll(hBox,statusL);
+        getChildren().addAll(nameL,forImageAndFriends,statusL);
         setAlignment(Pos.TOP_LEFT);
         setSpacing(20);
         setPadding(new Insets(20, 20, 50, 20));
-
     }
-
 }

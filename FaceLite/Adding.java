@@ -11,22 +11,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class Adding extends HBox {
     private Content content;
+    private Settings settings;
     
     public Content getContent() {
         return content;
     }
 
-    private Settings settings;
-    
     // ALL INFORMATION ABOUT USERS INTO THIS PANE.
     public Adding(Content content) {
         this.content = content;
@@ -51,7 +46,7 @@ public class Adding extends HBox {
             String nameUser = addNameField.getText().trim();
 
             // CHECK THE USER HAVE ALREADY EXISTED OR NOT.
-            String pattern = "^[a-zA-Z_-]*$";
+            String pattern = "^[a-zA-Z_\\ ]*$";            
             if ((nameUser.matches(pattern)) && !(nameUser.isEmpty())) {
                 if (!(Users.checkUser(nameUser))) {
                     content.updatedMessage("New profile created");
@@ -80,7 +75,6 @@ public class Adding extends HBox {
             if (Users.userData.containsKey(addNameField.getText())) {
                 for (Map.Entry<String, Object[]> users : Users.userData.entrySet()) {
                     String userName = users.getKey();
-                    Object[] values = users.getValue();
                     String deletedUser = addNameField.getText();
                     Object[] data = Users.userData.get(userName);
                     ArrayList<String> friends = (ArrayList<String>) data[2];
@@ -117,6 +111,7 @@ public class Adding extends HBox {
                 }
             } else {
                 content.updatedMessage("A Profile with the name of " + nameUser + " does not exist");
+                content.updateContent(null);
             }
         });
         hBox.getChildren().addAll(name,addNameField,add,delete,lookUp);

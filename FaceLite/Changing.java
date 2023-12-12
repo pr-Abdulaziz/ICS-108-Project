@@ -15,7 +15,6 @@ import javafx.scene.input.KeyCode;
 import java.io.File;
 import java.util.ArrayList;
 
-
 public class Changing extends VBox {
     private Users users;
     private Content content;
@@ -58,21 +57,23 @@ public class Changing extends VBox {
                 String name = content.getProfile().getName();
                 String status = name + " is " + changeStatusField.getText().trim();
                 String pattern = "^[a-zA-Z_\\-0-9 ]*$";
-                if ((status.matches(pattern))) {
+                Object[] data = Users.userData.get(name);
+                String pathImage = (String) data[0];
+                ArrayList<String> friends = (ArrayList<String>) data[2];
+                
+                if ((status != data[1]) &&(status.matches(pattern))) {
                     if (!(status.isEmpty())) {
+                        String updatedStatus = status;
                         content.updatedMessage("Status updated to: "+status);
                         Users.updateStatus(name,status);
-                        Object[] data = Users.userData.get(name);
-                        String pathImage = (String) data[0];
-                        String updatedStatus = status;
-                        ArrayList<String> friends = (ArrayList<String>) data[2];
+
                         Profile profile = new Profile(name,pathImage,updatedStatus,friends);
                         content.updateContent(profile);               
                     } else {
                         content.updatedMessage("Status is empty, please write again");
                     }
                 } else {
-                    content.updatedMessage("Please write again, your status should only contains [a to z, _ , -]");
+                    content.updatedMessage("Please write again, your status should only contains [a to z, _ , -, 0-9]");
                 }
             }
         });
@@ -84,21 +85,23 @@ public class Changing extends VBox {
                     String name = content.getProfile().getName();
                     String status = name + " is " + changeStatusField.getText().trim();
                     String pattern = "^[a-zA-Z_\\-0-9 ]*$";
-                    if ((status.matches(pattern))) {
+                    Object[] data = Users.userData.get(name);
+                    String pathImage = (String) data[0];
+                    ArrayList<String> friends = (ArrayList<String>) data[2];
+                    
+                    if ((status != data[1]) &&(status.matches(pattern))) {
                         if (!(status.isEmpty())) {
+                            String updatedStatus = status;
                             content.updatedMessage("Status updated to: "+status);
                             Users.updateStatus(name,status);
-                            Object[] data = Users.userData.get(name);
-                            String pathImage = (String) data[0];
-                            String updatedStatus = status;
-                            ArrayList<String> friends = (ArrayList<String>) data[2];
+
                             Profile profile = new Profile(name,pathImage,updatedStatus,friends);
                             content.updateContent(profile);               
                         } else {
                             content.updatedMessage("Status is empty, please write again");
                         }
                     } else {
-                        content.updatedMessage("Please write again, your status should only contains [a to z, _ , -]");
+                        content.updatedMessage("Please write again, your status should only contains [a to z, _ , -, 0-9]");
                     }
                 }
             }
@@ -146,6 +149,7 @@ public class Changing extends VBox {
                 else {
                     String name = content.getProfile().getName();
                     String imagePath = changePictureField.getText().trim();
+                    
                     if (!(imagePath.isEmpty())) {
                         try { 
                             File image = new File("FaceLite/assests/images/"+imagePath);
@@ -203,15 +207,19 @@ public class Changing extends VBox {
                 String name = content.getProfile().getName();
                 String friendName = addFriendField.getText();
                 ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
-                if (!(name.equals(friendName)) && (Users.checkUser(friendName)) && (friendNames.contains(friendName))) {
-                    content.updatedMessage(friendName+" is deleted from your frirnds list.");
-                    Users.deletingFriends(name, friendName);
-                    Object[] data = Users.userData.get(name);
-                    String pathImage = (String) data[0];
-                    String status = (String) data[1];
-                    ArrayList<String> friends = (ArrayList<String>) data[2];
-                    Profile profile = new Profile(name,pathImage,status,friends);
-                    content.updateContent(profile);                
+                if (!(name.equals(friendName)) && (Users.checkUser(friendName))) {
+                    if ((friendNames.contains(friendName))) {
+                        content.updatedMessage(friendName+" is deleted from your friends list.");
+                        Users.deletingFriends(name, friendName);
+                        Object[] data = Users.userData.get(name);
+                        String pathImage = (String) data[0];
+                        String status = (String) data[1];
+                        ArrayList<String> friends = (ArrayList<String>) data[2];
+                        Profile profile = new Profile(name,pathImage,status,friends);
+                        content.updateContent(profile);                
+                    } else {
+                        content.updatedMessage("friend with the name "+friendName+" is not on your list."); 
+                    }
                 }
                 else{
                     content.updatedMessage("friend with the name "+friendName+" can not be deleted"); 
@@ -258,5 +266,4 @@ public class Changing extends VBox {
         Background background = new Background(backgroundFill);
         setBackground(background);
     }
-
 }
