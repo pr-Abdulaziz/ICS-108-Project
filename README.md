@@ -17,7 +17,8 @@
 9. [Changing Class](#changing-class)
 10. [Content Class](#content-class)
 11. [Users Class](#users-class)
-12. [Extra features added to the project: to enhance the users' experience](#extra-features-added-to-the-project-to-enhance-the-users-experience)
+12. [Usage](#usage)
+13. [Extra features added to the project: to enhance the users' experience](#extra-features-added-to-the-project-to-enhance-the-users-experience)
 
 
 ## Introduction
