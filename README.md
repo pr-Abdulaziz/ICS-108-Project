@@ -323,9 +323,11 @@ Steps before that, suppose there is a new profile's name Abdulaziz.
 
 - Can write the name of a specific profile and clicking Delete to delete that profile (there must be a profile associated with the given name).  
 
-- Can write the name of a specific profile and clicking LookUp to display that profile (there must be a profile associated with the given name).  
-
 ![Alt text](FaceLite/displaying/14.png)
+
+- Can write the name of a specific profile and clicking LookUp to display that profile (there must be a profile associated with the given name).  
+![Alt text](FaceLite/displaying/12.png)
+
 
 In general, the program displays the user's name, status, profile image, list of friends, as well as an updating massage mentioning what was the last action preformed by the application.
 
