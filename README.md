@@ -272,37 +272,37 @@ deleteFriend.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts
 1. Start the program
 
 
-![Alt text](FaceLite/displaying/1.png)
+![Alt text](FaceLite/displaying/01.png)
 
 2. Write the desired name of the new user profile and then click Add
 
-![Alt text](FaceLite/displaying/2.png)
+![Alt text](FaceLite/displaying/02.png)
 
 #### Then the following action could be made:
 
 - Invalid input example after clicking Change Status.
-![Alt text](FaceLite/displaying/4.png)
+![Alt text](FaceLite/displaying/04.png)
 
 - Changing that user's status and clicking Change Status.
-![Alt text](FaceLite/displaying/5.png)
+![Alt text](FaceLite/displaying/05.png)
 
 - Invalid input example after clicking Change Status.
 
 
 
 - Changing that user's profile image and clicking Change picture.  
-![Alt text](FaceLite/displaying/6.png)
+![Alt text](FaceLite/displaying/06.png)
 
 - Invalid input example after clicking Change Status.
-![Alt text](FaceLite/displaying/7.png)
+![Alt text](FaceLite/displaying/07.png)
 
 
 - Adding a new friend by writing the friend's name in the textfield and clicking Add friend (there must be a profile associated with the given name)  
 
 - Invalid input example after clicking Add or Delete friend.
-![Alt text](FaceLite/displaying/8.png)
+![Alt text](FaceLite/displaying/08.png)
 
-![Alt text](FaceLite/displaying/9.png)
+![Alt text](FaceLite/displaying/09.png)
 
 - Deleting a friend by writing the friend's name in the textfield and clicking Delete friend (there must be a profile associated with the given name)  
 
