@@ -41,6 +41,7 @@ public class Changing extends VBox {
         changeStatusField.setPromptText("Change Status");            
         changePictureField.setPromptText("Change Picture");            
         addFriendField.setPromptText("Friend name");
+        // SETTING DEFAULT WIDTH.
         changeStatusField.setPrefWidth(200);            
         changePictureField.setPrefWidth(200);            
         addFriendField.setPrefWidth(200);
@@ -51,13 +52,15 @@ public class Changing extends VBox {
         deleteFriend.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Quicksand/static/Quicksand-Bold.ttf"),12));
         
         changeStatus.setOnAction(e -> {
+            // FIRST, WE WANT TO CHECK IF CURRENT PROFILE IS EXIST OR NOT.
             if (content.getProfile() == null) {
                 content.updatedMessage("Please select a profile to change the status");
             } else {
                 String name = content.getProfile().getName();
-                String status = name + " is " + changeStatusField.getText().trim();
-                String pattern = "^[a-zA-Z_\\-0-9 ]*$";
-                Object[] data = Users.userData.get(name);
+                String status = name + " is " + changeStatusField.getText().trim(); // DELETE ALL NOT IMPORTANT SPACES FROM TEXTFIELD.
+                String pattern = "^[a-zA-Z_\\-0-9 ]*$";  // MATCHING FOR SPECIFIC KEYWORDS THAT ONLY SHOULD BE WRITTEN.
+                // DEFINING A DATA IN OBJECT CLASS, BECAUSE WE HAVE INSIDE AN ARRAY 'STRING' AND ARRAYLIST<STRING>.
+                Object[] data = Users.userData.get(name); 
                 String pathImage = (String) data[0];
                 ArrayList<String> friends = (ArrayList<String>) data[2];
                 
@@ -83,9 +86,9 @@ public class Changing extends VBox {
                     content.updatedMessage("Please select a profile to change the status");
                 } else {
                     String name = content.getProfile().getName();
-                    String status = name + " is " + changeStatusField.getText().trim();
-                    String pattern = "^[a-zA-Z_\\-0-9 ]*$";
-                    Object[] data = Users.userData.get(name);
+                    String status = name + " is " + changeStatusField.getText().trim(); // DELETE ALL NOT IMPORTANT SPACES FROM TEXTFIELD.
+                    String pattern = "^[a-zA-Z_\\-0-9 ]*$"; // MATCHING FOR SPECIFIC KEYWORDS THAT ONLY SHOULD BE WRITTEN.
+                    Object[] data = Users.userData.get(name); // DEFINING A DATA IN OBJECT CLASS, BECAUSE WE HAVE INSIDE AN ARRAY 'STRING' AND ARRAYLIST<STRING>.
                     String pathImage = (String) data[0];
                     ArrayList<String> friends = (ArrayList<String>) data[2];
                     
@@ -113,10 +116,11 @@ public class Changing extends VBox {
                 content.updatedMessage("Please select a profile to change the picture");
             } 
             else {
-                String name = content.getProfile().getName();
-                String imagePath = changePictureField.getText().trim();
+                String name = content.getProfile().getName(); // GETTING A NAME FROM CURRENT USER FROM THE PROFILE CLASS.
+                String imagePath = changePictureField.getText().trim(); // DELETE ALL NOT IMPORTANT SPACES FROM TEXTFIELD.
                 if (!(imagePath.isEmpty())) {
                     try { 
+                        // WE DEFINE THE IMAGE AND PUT IT INTO THE RIGHT PATH: "FaceLite/assests/images/"
                         File image = new File("FaceLite/assests/images/"+imagePath);
                         // ClassLoader classLoader = Main.class.getClassLoader();
                         if (!image.exists()) {
@@ -152,8 +156,8 @@ public class Changing extends VBox {
                     
                     if (!(imagePath.isEmpty())) {
                         try { 
+                            // WE DEFINE THE IMAGE AND PUT IT INTO THE RIGHT PATH: "FaceLite/assests/images/"
                             File image = new File("FaceLite/assests/images/"+imagePath);
-                            // ClassLoader classLoader = Main.class.getClassLoader();
                             if (!image.exists()) {
                                 throw new NullPointerException("Resource not found.");
                             }
@@ -181,6 +185,7 @@ public class Changing extends VBox {
             if (content.getProfile() == null) {
                 content.updatedMessage("Please select a profile to change the friends");
             } else {
+                // GETTING A NAME FROM CURRENT USER FROM THE PROFILE CLASS.
                 String name = content.getProfile().getName();
                 String friendName = addFriendField.getText();
                 ArrayList<String> friendNames = (ArrayList<String>) Users.userData.get(name)[2];
@@ -191,6 +196,7 @@ public class Changing extends VBox {
                     String pathImage = (String) data[0];
                     String status = (String) data[1];
                     ArrayList<String> friends = (ArrayList<String>) data[2];
+                    // DEFINE THE PROFILE CLASS, AND PUT IT INTO THE CONTENT.
                     Profile profile = new Profile(name,pathImage,status,friends);
                     content.updateContent(profile);                
                 }

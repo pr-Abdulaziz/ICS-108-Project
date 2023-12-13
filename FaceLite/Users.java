@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Users {
-    protected static HashMap<String, Object[]> userData = new HashMap<String, Object[]>();
-    static File usersDataBase = new File("FaceLite/assests/usersDataBase.txt");
+    // OUR DATABASE OF USERS
+    protected static HashMap<String, Object[]> userData = new HashMap<String, Object[]>(); // OUR DATABASE OF USERS
+    static File usersDataBase = new File("FaceLite/assests/usersDataBase.txt"); // OUR DATABASE FILE THAT WE CAN READING FROM AND WRITING INTO.
     public static HashMap<String, Object[]> getUserData() {
         return userData;
     }
-
+    // RETURN USER'S DATA IF NECESSARY.
     public static Object[] getUser(String name) {
         return userData.get(name);
     }
@@ -38,12 +39,14 @@ public class Users {
         Object[] existingData = userData.get(userName);
         existingData[1] = newStatus;
     }
+    // ADDING NEW FRIEND INTO SPECIFIC USER.
     public static void addingFriends(String userName, String friendName) {
         Object[] existingData1 = userData.get(userName);
         Object[] existingData2 = userData.get(friendName);
         ((ArrayList<String>) existingData1[2]).add(friendName);
         ((ArrayList<String>) existingData2[2]).add(userName);
     }
+    // DELETING A FRIEND FROM SPECIFIC USER.
     public static void deletingFriends(String userName, String friendName) {
         Object[] existingData1 = userData.get(userName);
         Object[] existingData2 = userData.get(friendName);
@@ -77,7 +80,7 @@ public class Users {
                                 friends.add(fString[i]);
                             }
                         }
-                        
+                        // DEFINING A DATA IN OBJECT CLASS, BECAUSE WE HAVE INSIDE AN ARRAY 'STRING' AND ARRAYLIST<STRING>.
                         Object[] data = {image, status, friends};
                         userData.put(name, data);
                     } else {

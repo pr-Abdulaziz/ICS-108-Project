@@ -106,8 +106,6 @@ public class Adding extends HBox {
                     
                     Profile profile = new Profile(nameUser, pathImage, status,friends);
                     content.updateContent(profile); // Assuming Content class has this method
-                } else {
-                    // Handle case where user is not found
                 }
             } else {
                 content.updatedMessage("A Profile with the name of " + nameUser + " does not exist");
@@ -130,8 +128,9 @@ public class Adding extends HBox {
 }
 
 class Settings extends VBox {
+    // THIS CLASS WE USE TO CHANGE THE USER'S MODE INTERFACE.
     public Settings() {
-        
+        // HERE WE USE CHOICE BOX CLASS FROM JAVAFX.
         ChoiceBox<String> options = new ChoiceBox<>();
         String[] modes = {"Night Mode", "White Mode", "Sky Mode"};
         options.getItems().addAll(modes);
@@ -153,6 +152,7 @@ class Settings extends VBox {
 
     }
     public void setBackground(Color color) {
+        // SETTING A BACKGROUND INTO THE MAIN CONTENT.
         BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
         BuildScreen.pane.setBackground(background);

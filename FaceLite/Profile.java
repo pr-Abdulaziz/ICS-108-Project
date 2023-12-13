@@ -14,6 +14,7 @@ public class Profile extends VBox {
     private String profileImage;
     private ArrayList<String> friends;
     
+    // RETURN USER'S PROFILE IF NECESSARY.
     public String getName() {
         return name;
     }
@@ -25,6 +26,7 @@ public class Profile extends VBox {
     }
     // ADDING A NEW PROFILE -- DEFAULT PROFILE -- 
     public Profile(String name) {
+        // ALL DEFAULT VARIABLES.
         this.name = name;
         this.status = "No current Status";
         this.profileImage = "NoImage.png";
@@ -33,14 +35,17 @@ public class Profile extends VBox {
         Label statusL = new Label(status);
         Label friendListL = new Label("Friends");
 
-        
+        // SETTING FOR FONTS.
         nameL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf",30));
         nameL.setTextFill(Color.BLUE);
         statusL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 15));
         friendListL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 25));
-        
+
+        // DISPLAY AN IMAGE USING 'Image' CLASS AND 'ImageView' class.
         Image image = new Image(getClass().getResource("assests/images/"+profileImage).toString());
         ImageView imageView = new ImageView(image);
+
+        // SETTING FOR THE MAXIMUM WIDTH AND HEIGHT OF THE IMAGE.
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);
         VBox vBoxForListOfFriends = new VBox(10);
@@ -50,7 +55,7 @@ public class Profile extends VBox {
             Label label = new Label(listOfFriends.get(i));
             vBoxForListOfFriends.getChildren().add(label);
         }
-        
+        // SETTING AS A HORIZONTAL BETWEEN AN IMAGE AND LIST OF FRIENDS. SO, YOU CAN YOUR FULL NAME INTO THE SCREEN.
         HBox forImageAndFriends = new HBox(150);
         forImageAndFriends.getChildren().addAll(imageView,vBoxForListOfFriends);
         forImageAndFriends.setAlignment(Pos.TOP_LEFT);
@@ -62,7 +67,6 @@ public class Profile extends VBox {
     }
     // ADDING OR CHANGING USER'S PROFILE
     public Profile(String name, String profileImage, String status, ArrayList<String> friends) {
-        HBox hBox = new HBox();
         this.name = name;
         this.status = status;
         this.profileImage = profileImage;
@@ -71,14 +75,16 @@ public class Profile extends VBox {
         Label statusL = new Label(status);
         Label friendListL = new Label("Friends");
 
-        
+        // SETTING FOR FONTS.
         nameL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf",30));
         nameL.setTextFill(Color.BLUE);
         statusL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 15));
         friendListL.setFont(Font.font("assests/fonts/Quicksand/static/Quicksand-Bold.ttf", 25));
         
+        // DISPLAY AN IMAGE USING 'Image' CLASS AND 'ImageView' class.
         Image image = new Image(getClass().getResource("assests/images/"+profileImage).toString());
         ImageView imageView = new ImageView(image);
+        // SETTING FOR THE MAXIMUM WIDTH AND HEIGHT OF THE IMAGE.
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);
         VBox vBoxForListOfFriends = new VBox(10);

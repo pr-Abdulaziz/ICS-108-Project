@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 
 // Build the screen
 public class BuildScreen {
+    // DEFINING ALL INSTANCE VARIABLES.
     private Stage stage;
     private Scene mainScene;
     private Content content;
@@ -38,6 +39,7 @@ public class BuildScreen {
 
 
     public BuildScreen(Stage stage) {
+        // HERE IS THE MAIN STAGE IN OUR PROGRAM.
         this.stage = stage;
         buildGUI();
     }
@@ -48,11 +50,12 @@ public class BuildScreen {
 
         StackPane mainRoot = new StackPane();
         VBox vBox = new VBox(20);
-        
+        // SETTING A BACKGROUND
         BackgroundFill backgroundFill = new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
         mainRoot.setBackground(background);
 
+        // AFTER RUNNING A PROGRAM, YOU WILL SEE A WELCOMING SCREEN.
         Label welcomeL = new Label("Welcome to FaceLite");
         welcomeL.setFont(Font.loadFont(getClass().getResourceAsStream("assests/fonts/Ubuntu/Ubuntu-Bold.ttf"),30));
         welcomeL.setTextFill(Color.WHITE);
@@ -63,7 +66,7 @@ public class BuildScreen {
         ImageView iconView = new ImageView(icon);
         iconView.setFitHeight(100);
         iconView.setFitWidth(100);
-
+        // DESIGNING AND ICON.
         Rectangle borderRadius = new Rectangle(iconView.getFitWidth(), iconView.getFitHeight());
         borderRadius.setArcWidth(20);
         borderRadius.setArcHeight(20);
@@ -108,7 +111,9 @@ public class BuildScreen {
 
         
     }
+    // HERE FOR FOR EXITING PROGRAM.
     public void closeProgram() {
+        // IMPORT THE TITLE AND MESSAGE INTO THE CONFIRM BOX CLASS.
         boolean answer = ConfirmBox.display("Exit", "Sure you want to close the program?");
         if (answer) {
             stage.close();
@@ -135,6 +140,7 @@ public class BuildScreen {
                                 }
                             }
                         }
+                        // SPLITING THE MAIN INFORMATION USING '///'.
                         output.print(userName + "///");
                         for (int index = 0; index < info.size(); index++) {
                             if (index == info.size()-1) 
@@ -143,6 +149,7 @@ public class BuildScreen {
                                 output.print(info.get(index)+"///");
                             }
                         }
+                        // SPLITING THE A LIST OF FRIENDS USING '--->>>'.
                         if (friends.size() > 0) {
                             output.print("///");
                             for (int i = 0; i < friends.size(); i++) {
@@ -160,7 +167,7 @@ public class BuildScreen {
             } 
         }
     }  
-
+    // THE MAIN SCENE
     private void switchToMainScene() {
         pane = new BorderPane();
         BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
@@ -179,6 +186,7 @@ public class BuildScreen {
         pane.setTop(adding);
         pane.setCenter(vBox);
 
+        // FOR ICON: 
         Image icon = new Image(getClass().getResource("assests/Icon.png").toString());
 
         stage.setOnCloseRequest(e -> {

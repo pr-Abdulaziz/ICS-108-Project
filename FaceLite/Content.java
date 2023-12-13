@@ -7,12 +7,13 @@ public class Content extends Pane {
     private Updated updated;
     private VBox vBox;
 
-     
+    // GETTING ALL INFORMATION ABOUT THE CURRENT PROFILE.
     public Profile getProfile() {
         return profile;
     }
 
     public Content(Updated updated){
+        // UPDATING CURRENT MESSAGE.
         this.updated = updated;
         vBox = new VBox();
         setPadding(new Insets(10, 10, 10, 10));
@@ -22,6 +23,7 @@ public class Content extends Pane {
     }
 
     public void updateContent(Profile profile) {
+        // UPDATING CURRENT PROFILE.
         this.profile = profile;
         
         // Clear existing profile before adding the new profile
@@ -38,6 +40,7 @@ public class Content extends Pane {
         // Update layout as necessary
     }
     public void updatedMessage(String messageText) {
+        // CHECKING FIRST FROM THE UPDATE CLASS.
         if (updated == null) {
             updated = new Updated();
             updated.setMessage(messageText);

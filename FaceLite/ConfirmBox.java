@@ -14,6 +14,7 @@ public class ConfirmBox {
     public static boolean answer;
 
     public static boolean display(String title, String message) {
+        // This code snippet demonstrates the creation and configuration of graphical elements
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -23,7 +24,10 @@ public class ConfirmBox {
 
         HBox hbox = new HBox(15);
 
-        
+        // FOR A CONFIRMATION BOX, INCLUDING AN IMAGE, LABEL, AND BUTTONS FOR 'YES' AND 'NO'.
+
+        // THE IMAGE IS LOADED FROM THE "ASSESTS" DIRECTORY.
+        // TO THE WARNING IMAGE, AND PADDING IS SET TO ENHANCE VISUAL APPEAL.
         Image image = new Image(ConfirmBox.class.getResource("assests/warning_Image.jpg").toString());
         ImageView imageWarning = new ImageView(image);
         imageWarning.setFitHeight(30);
@@ -34,6 +38,7 @@ public class ConfirmBox {
         Button yes = new Button("Yes");
         Button no = new Button("No");
 
+        // HBOX AND VBOX FOR PROPER ALIGNMENT. USING TO FIT HEIGHT AND WIDTH.
         VBox vbox = new VBox(20);
         HBox buttons = new HBox(20);
         buttons.setAlignment(Pos.CENTER);
@@ -42,17 +47,19 @@ public class ConfirmBox {
         buttons.getChildren().addAll(yes, no);
         vbox.getChildren().addAll(hbox, buttons);
 
+        // SET ON ACTION, IF THE USER CLICK YES, THE STAGE WILL CLOSE IMMEDIATLY.
         yes.setOnAction(e -> {
             answer = true;
             window.close();
         });
+        // SET ON ACTION, IF THE USER CLICK NO.
         no.setOnAction(e -> {
             answer = false;
             window.close();
         });
 
         Scene scene = new Scene(vbox);
-
+        // FITTING THE STAGE.
         window.setMaxHeight(200);
         window.setMaxWidth(300);
         window.setMinHeight(150);
